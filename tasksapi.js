@@ -39,7 +39,7 @@ function notifyFailure(msg, code) {
 }
 
 function addTask(task) {
-  var url = 'https://www.googleapis.com/tasks/v1/lists/@default/tasks';
+  var url = 'https://www.googleapis.com/tasks/v1/lists/@default/tasks/';
   var req = {
     'method': 'POST',
     'headers': {
@@ -53,7 +53,6 @@ function addTask(task) {
       notifyFailure('Couldn\'t add task.', xhr.status);
       return;
     }
-
     notifySuccess(task['title']);
   }
 
