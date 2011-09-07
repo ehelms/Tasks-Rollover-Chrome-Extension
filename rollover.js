@@ -43,7 +43,7 @@ function updateTask(task, cb) {
 }
 
 function checkForCalendarUrl(tabId, changeInfo, tab) {
-    if (tab.url.indexOf('www.google.com/calendar/') > -1) {
+    if (tab.url.indexOf('https://www.google.com/calendar/') > -1 || tab.url.indexOf('https://mail.google.com/mail/') > -1) {
         getTasks(rollTasksOver);
     }
 };
