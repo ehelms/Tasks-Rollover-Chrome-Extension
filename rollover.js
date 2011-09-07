@@ -42,4 +42,10 @@ function updateTask(task, cb) {
   oauth.sendSignedRequest(url, getDone, req);
 }
 
-getTasks(rollTasksOver);
+function checkForCalendarUrl(tabId, changeInfo, tab) {
+    if (tab.url.indexOf('www.google.com/calendar/') > -1) {
+        getTasks(rollTasksOver);
+    }
+};
+
+chrome.tabs.onUpdated.addListener(checkForCalendarUrl);
