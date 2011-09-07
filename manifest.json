@@ -1,22 +1,18 @@
 {
-  "name": "Google Tasks (by Google)",
+  "name": "Google Tasks Daily Rollover",
   "version": "1.0",
-  "description": "Official Chrome Extension for Google Tasks",
+  "description": "Rolls Google Task due dates to the current day if they were not completed previously.",
   "browser_action": {
     "default_icon": "images/tasks-19x19.png",
-    "default_title": "Google Tasks",
+    "default_title": "Google Tasks Rollover",
     "popup": "popup.html"
   },
   "background_page": "background.html",
-  "omnibox": {
-    "keyword": "t"
-  },
   "icons": {
     "16": "images/tasks-16x16.png",
     "48": "images/tasks-48x48.png"
   },
   "permissions": [
-    "contextMenus",
     "notifications",
     "tabs",
     "http://www.google.com/",
