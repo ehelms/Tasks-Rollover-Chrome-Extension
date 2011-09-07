@@ -10,7 +10,7 @@ var rollTasksOver = function(data){
     for( i=0; i < length; i +=1 ){
         task = data.items[i];
 
-        if( task.due ){
+        if( task.due && !task.completed ){
             taskDate = new Date(task.due);
             
             if( taskDate.getDate() !== today.getDate() ){
