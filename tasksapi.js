@@ -1,3 +1,9 @@
+// Copyright 2011, Eric D. Helms
+//
+// This file had been modified from its original version.
+// 
+// Added API call to update a single task.
+
 // Copyright 2011, the Google Tasks Chrome Extension authors.
 //
 // Licensed under the Apache License, Version 2.0 (the 'License');
@@ -74,6 +80,26 @@ function getTasks(cb) {
     }
 
     cb.call(this, JSON.parse(resp));
+  }
+
+  oauth.sendSignedRequest(url, getDone, req);
+}
+
+function updateTask(task) {
+  var url = 'https://www.googleapis.com/tasks/v1/lists/@default/tasks/' + task.id;
+  var req = {
+    'method': 'PUT',
+    'headers': {
+      'Content-type': 'application/json'
+    },
+    'body': JSON.stringify(task)
+  };
+
+  var getDone = function(resp, xhr) {
+    if (xhr.status != 200) {
+      notifyFailure('Couldn\'t update tasks.', xhr.status);
+    }
+
   }
 
   oauth.sendSignedRequest(url, getDone, req);

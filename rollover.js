@@ -1,3 +1,19 @@
+/*
+Copyright 2011, Eric D. Helms
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 var rollTasksOver = function(data){
     var length=data.items.length, 
         i=0,
@@ -22,29 +38,10 @@ var rollTasksOver = function(data){
     }
 };
 
-function updateTask(task, cb) {
-  var url = 'https://www.googleapis.com/tasks/v1/lists/@default/tasks/' + task.id;
-  var req = {
-    'method': 'PUT',
-    'headers': {
-      'Content-type': 'application/json'
-    },
-    'body': JSON.stringify(task)
-  };
-
-  var getDone = function(resp, xhr) {
-    if (xhr.status != 200) {
-      notifyFailure('Couldn\'t update tasks.', xhr.status);
-    }
-
-  }
-
-  oauth.sendSignedRequest(url, getDone, req);
-}
-
 function checkForCalendarUrl(tabId, changeInfo, tab) {
     if (tab.url.indexOf('https://www.google.com/calendar/') > -1 || tab.url.indexOf('https://mail.google.com/mail/') > -1) {
         getTasks(rollTasksOver);
+        chrome.pageAction.show(tabId);
     }
 };
 
