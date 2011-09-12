@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 function notifyRolledOver(){
-    var logo = 'images/rollver-clock_48x48.png',
+    var logo = 'images/rollover-clock_48x48.png',
         title = 'RollOver Success',
         body = 'Tasks successfully rolled over to current date';
 
@@ -29,17 +29,15 @@ var rollTasksOver = function(data){
         notify = false;
 
     today = new Date();
-
+    
     for( i=0; i < length; i +=1 ){
         task = data.items[i];
 
         if( task.due && !task.completed ){
             taskDate = new Date(task.due);
-            taskDate.setTime(taskDate.getTime() - (taskDate.getTimezoneOffset() * 60000));
 
-            if( taskDate.getDate() !== today.getDate() ){
-                taskDate.setDate(today.getDate());
-                taskDate.setHours(0);
+            if( (taskDate.getDate() + 1) !== today.getDate() ){
+                taskDate.setTime(today.getTime());
                 task.due = taskDate.toISOString();
                 updateTask({ 'due' : task.due, "id" : task.id });
                 notify = true;
@@ -54,7 +52,9 @@ var rollTasksOver = function(data){
 
 function checkForCalendarUrl(tabId, changeInfo, tab) {
     if (tab.url.indexOf('https://www.google.com/calendar/') > -1) {
-        getTasks(rollTasksOver);
+        if( changeInfo.status === 'complete' ){
+            getTasks(rollTasksOver);
+        }
     }
 };
 
