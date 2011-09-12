@@ -13,13 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+function notifyRolledOver(){
+    var logo = 'images/rollver-clock_48x48.png',
+        title = 'RollOver Success',
+        body = 'Tasks successfully rolled over to current date';
 
+    notify(logo, title, body);
+};
 var rollTasksOver = function(data){
     var length=data.items.length, 
         i=0,
         task,
         taskDate,
-        today;
+        today,
+        notify = false;
 
     today = new Date();
 
@@ -28,20 +35,26 @@ var rollTasksOver = function(data){
 
         if( task.due && !task.completed ){
             taskDate = new Date(task.due);
-            
+            taskDate.setTime(taskDate.getTime() - (taskDate.getTimezoneOffset() * 60000));
+
             if( taskDate.getDate() !== today.getDate() ){
-                taskDate.setDate(today.getDate() - 1);
+                taskDate.setDate(today.getDate());
+                taskDate.setHours(0);
                 task.due = taskDate.toISOString();
                 updateTask({ 'due' : task.due, "id" : task.id });
+                notify = true;
             }
         }
+    }
+
+    if( notify ){
+        notifyRolledOver();
     }
 };
 
 function checkForCalendarUrl(tabId, changeInfo, tab) {
     if (tab.url.indexOf('https://www.google.com/calendar/') > -1 || tab.url.indexOf('https://mail.google.com/mail/') > -1) {
         getTasks(rollTasksOver);
-        chrome.pageAction.show(tabId);
     }
 };
 

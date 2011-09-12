@@ -32,14 +32,14 @@ function notify(logo, title, opt_body) {
 }
 
 function notifySuccess(body) {
-  var logo = 'images/tasks-48x48.png';
+  var logo = 'images/rollover-clock_48x48.png';
   var title = 'Task added successfully!';
   notify(logo, title, body);
 }
 
 function notifyFailure(msg, code) {
   // TODO: Redirect to login UI flow and retry, if this is a problem.
-  var logo = 'images/tasks-error-48x48.png';
+  var logo = 'images/rollover-clock_48x48.png';
   var title = msg + ' (' + code + ')';
   notify(logo, title);
 }
@@ -97,9 +97,8 @@ function updateTask(task) {
 
   var getDone = function(resp, xhr) {
     if (xhr.status != 200) {
-      notifyFailure('Couldn\'t update tasks.', xhr.status);
-    }
-
+      //notifyFailure('Couldn\'t update tasks.', xhr.status);
+    } 
   }
 
   oauth.sendSignedRequest(url, getDone, req);
