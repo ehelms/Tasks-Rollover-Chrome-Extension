@@ -53,7 +53,7 @@ var rollTasksOver = function(data){
 };
 
 function checkForCalendarUrl(tabId, changeInfo, tab) {
-    if (tab.url.indexOf('https://www.google.com/calendar/') > -1 || tab.url.indexOf('https://mail.google.com/mail/') > -1) {
+    if (tab.url.indexOf('https://www.google.com/calendar/') > -1) {
         getTasks(rollTasksOver);
     }
 };
