@@ -20,6 +20,7 @@ function notifyRolledOver(){
 
     notify(logo, title, body);
 };
+
 var rollTasksOver = function(data){
     var length=data.items.length, 
         i=0,
@@ -58,4 +59,9 @@ function checkForCalendarUrl(tabId, changeInfo, tab) {
     }
 };
 
+function checkTasks(tabId, selectInfo){
+    getTasks(rollTasksOver);
+};
+
 chrome.tabs.onUpdated.addListener(checkForCalendarUrl);
+chrome.tabs.onSelectionChanged.addListener(checkTasks);
