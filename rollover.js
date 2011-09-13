@@ -36,7 +36,7 @@ var rollTasksOver = function(data){
         if( task.due && !task.completed ){
             taskDate = new Date(task.due);
 
-            if( (taskDate.getDate() + 1) !== today.getDate() ){
+            if( (taskDate.getDate() + 1) !== today.getDate() && (taskDate.getDate() + 1) < today.getDate() ){
                 taskDate.setTime(today.getTime());
                 task.due = taskDate.toISOString();
                 updateTask({ 'due' : task.due, "id" : task.id });
@@ -52,7 +52,7 @@ var rollTasksOver = function(data){
 
 function checkForCalendarUrl(tabId, changeInfo, tab) {
     if (tab.url.indexOf('https://www.google.com/calendar/') > -1) {
-        if( changeInfo.status === 'complete' ){
+        if( changeInfo.status === 'loading' ){
             getTasks(rollTasksOver);
         }
     }

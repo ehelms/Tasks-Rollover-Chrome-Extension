@@ -96,8 +96,8 @@ function updateTask(task) {
   };
 
   var getDone = function(resp, xhr) {
-    if (xhr.status != 200) {
-      //notifyFailure('Couldn\'t update tasks.', xhr.status);
+      if (xhr.status != 200) {
+        oauth.sendSignedRequest(url, getDone, req);
     } 
   }
 
