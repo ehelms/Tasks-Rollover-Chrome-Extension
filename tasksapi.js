@@ -75,8 +75,10 @@ function getTasks(cb) {
   };
 
   var getDone = function(resp, xhr) {
-    cb.call(this, JSON.parse(resp));
-  }
+    if( xhr.status === 200 ){
+        cb.call(this, JSON.parse(resp));
+    }
+  };
 
   oauth.sendSignedRequest(url, getDone, req);
 }
