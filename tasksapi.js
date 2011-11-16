@@ -75,10 +75,6 @@ function getTasks(cb) {
   };
 
   var getDone = function(resp, xhr) {
-    if (xhr.status != 200) {
-      notifyFailure('Couldn\'t retrieve tasks.', xhr.status);
-    }
-
     cb.call(this, JSON.parse(resp));
   }
 

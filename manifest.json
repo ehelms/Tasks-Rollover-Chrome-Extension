@@ -1,6 +1,6 @@
 {
   "name": "Tasks Daily Rollover",
-  "version": "1.1.4",
+  "version": "1.1.7",
   "description": "Rolls Google Task due dates to the current day if they were not completed previously.",
   "browser_action": {
     "default_icon": "images/rollover-clock_16x16.png",
