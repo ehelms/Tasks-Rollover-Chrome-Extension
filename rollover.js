@@ -33,12 +33,17 @@ var rollTasksOver = function(data){
     
     for( i=0; i < length; i +=1 ){
         task = data.items[i];
-
+        
         if( task.due && !task.completed ){
             taskDate = new Date(task.due);
 
-            if( (taskDate.getDate() + 1) !== today.getDate() && (taskDate.getDate() + 1) < today.getDate() ){
-                taskDate.setTime(today.getTime());
+            if( (taskDate.getDate() + 1) < today.getDate() || taskDate.getMonth() < today.getMonth() ){
+                taskDate.setMinutes(0);
+                taskDate.setHours(0);
+                taskDate.setSeconds(0);
+                taskDate.setFullYear(today.getFullYear());
+                taskDate.setDate(today.getDate());
+                taskDate.setMonth(today.getMonth());
                 task.due = taskDate.toISOString();
                 updateTask({ 'due' : task.due, "id" : task.id });
                 notify = true;
