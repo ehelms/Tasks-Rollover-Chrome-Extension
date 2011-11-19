@@ -37,7 +37,7 @@ var rollTasksOver = function(data){
         if( task.due && !task.completed ){
             taskDate = new Date(task.due);
 
-            if( ((taskDate.getDate() + 1) < today.getDate() && taskDate.getMonth() <= today.getMonth) || taskDate.getMonth() < today.getMonth() ){
+            if( ((taskDate.getDate() + 1) < today.getDate() && taskDate.getMonth() <= today.getMonth && taskDate.getYear() <= today.getYear() ) || taskDate.getMonth() < today.getMonth() ){
                 taskDate.setMinutes(0);
                 taskDate.setHours(0);
                 taskDate.setSeconds(0);
