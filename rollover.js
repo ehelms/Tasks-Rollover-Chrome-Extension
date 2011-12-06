@@ -31,13 +31,15 @@ var rollTasksOver = function(data){
 
     today = new Date();
     
+    console.log('Checking for uncompleted tasks in the past')
     for( i=0; i < length; i +=1 ){
         task = data.items[i];
         
         if( task.due && !task.completed ){
             taskDate = new Date(task.due);
 
-            if( ((taskDate.getDate() + 1) < today.getDate() && taskDate.getMonth() <= today.getMonth && taskDate.getYear() <= today.getYear() ) || taskDate.getMonth() < today.getMonth() ){
+            if( ((taskDate.getDate() + 1) < today.getDate() && taskDate.getMonth() <= today.getMonth() && taskDate.getYear() <= today.getYear() ) || (taskDate.getMonth() < today.getMonth() && taskDate.getYear() <= today.getYear()) ){
+                console.log('Rolling task over');
                 taskDate.setMinutes(0);
                 taskDate.setHours(0);
                 taskDate.setSeconds(0);
@@ -65,6 +67,7 @@ function checkForCalendarUrl(tabId, changeInfo, tab) {
 };
 
 function checkTasks(tabId, selectInfo){
+    console.log('Checking for tasks');
     getTasks(rollTasksOver);
 };
 
