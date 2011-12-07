@@ -21,54 +21,60 @@ function notifyRolledOver(){
     notify(logo, title, body);
 };
 
-var rollTasksOver = function(data){
-    var length=data.items.length, 
-        i=0,
-        task,
-        taskDate,
-        today,
-        notify = false;
+var rollTasksOver = function(callback){
+    callback = callback || function(){};
 
-    today = new Date();
-    
-    console.log('Checking for uncompleted tasks in the past')
-    for( i=0; i < length; i +=1 ){
-        task = data.items[i];
+    getTasks(function(data){
+        var length=data.items.length, 
+            i=0,
+            task,
+            taskDate,
+            today,
+            notify = false;
+
+        today = new Date();
         
-        if( task.due && !task.completed ){
-            taskDate = new Date(task.due);
+        console.log('Checking for uncompleted tasks in the past')
+        for( i=0; i < length; i +=1 ){
+            task = data.items[i];
+            
+            if( task.due && !task.completed ){
+                taskDate = new Date(task.due);
 
-            if( ((taskDate.getDate() + 1) < today.getDate() && taskDate.getMonth() <= today.getMonth() && taskDate.getYear() <= today.getYear() ) || (taskDate.getMonth() < today.getMonth() && taskDate.getYear() <= today.getYear()) ){
-                console.log('Rolling task over');
-                taskDate.setMinutes(0);
-                taskDate.setHours(0);
-                taskDate.setSeconds(0);
-                taskDate.setFullYear(today.getFullYear());
-                taskDate.setDate(today.getDate());
-                taskDate.setMonth(today.getMonth());
-                task.due = taskDate.toISOString();
-                updateTask({ 'due' : task.due, "id" : task.id });
-                notify = true;
+                if( ((taskDate.getDate() + 1) < today.getDate() && taskDate.getMonth() <= today.getMonth() && taskDate.getYear() <= today.getYear() ) || (taskDate.getMonth() < today.getMonth() && taskDate.getYear() <= today.getYear()) ){
+                    console.log('Rolling task over');
+                    taskDate.setMinutes(0);
+                    taskDate.setHours(0);
+                    taskDate.setSeconds(0);
+                    taskDate.setFullYear(today.getFullYear());
+                    taskDate.setDate(today.getDate());
+                    taskDate.setMonth(today.getMonth());
+                    task.due = taskDate.toISOString();
+                    updateTask({ 'due' : task.due, "id" : task.id });
+                    notify = true;
+                }
             }
         }
-    }
 
-    if( notify ){
-        notifyRolledOver();
-    }
+        if( notify ){
+            notifyRolledOver();
+        }
+        
+        callback();
+    });
 };
 
 function checkForCalendarUrl(tabId, changeInfo, tab) {
     if (tab.url.indexOf('https://www.google.com/calendar/') > -1) {
         if( changeInfo.status === 'loading' ){
-            getTasks(rollTasksOver);
+            rollTasksOver();
         }
     }
 };
 
-function checkTasks(tabId, selectInfo){
+function checkTasks(){
     console.log('Checking for tasks');
-    getTasks(rollTasksOver);
+    rollTasksOver();
 };
 
 chrome.tabs.onUpdated.addListener(checkForCalendarUrl);
