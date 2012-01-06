@@ -50,7 +50,7 @@ var rollTasksOver = function(callback, manual){
                 if( task.due && !task.completed ){
                     taskDate = new Date(task.due);
 
-                    if( ((taskDate.getDate() + 1) < today.getDate() && taskDate.getMonth() <= today.getMonth() && taskDate.getYear() <= today.getYear() ) || (taskDate.getMonth() < today.getMonth() && taskDate.getYear() <= today.getYear()) ){
+                    if( ((taskDate.getDate() + 1) < today.getDate() && taskDate.getMonth() <= today.getMonth() && taskDate.getYear() <= today.getYear() ) || (taskDate.getMonth() < today.getMonth() && taskDate.getYear() <= today.getYear()) || taskDate.getYear() < today.getYear() ){
                         console.log('Rolling task over');
                         taskDate.setMinutes(0);
                         taskDate.setHours(0);
